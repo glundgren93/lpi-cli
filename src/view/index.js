@@ -1,6 +1,8 @@
-const blessed = require("blessed"),
-  contrib = require("blessed-contrib"),
-  { getData, retrieve } = require("../model");
+const blessed = require("blessed");
+const contrib = require("blessed-contrib");
+const { SHARE_DAILY_VALUE_KEY } = require("../util/constants");
+
+const Model = require("../model");
 
 class Dashboard {
   screen = blessed.screen();
@@ -29,7 +31,7 @@ class Dashboard {
     //allow control the table with the keyboard
     var data = [["Nome", "Telefone", "Cotas", "Valor Total"]];
 
-    getData().forEach((user) => {
+    Model.getData().forEach((user) => {
       data.push(user);
     });
 
@@ -37,7 +39,9 @@ class Dashboard {
   }
 
   generateMarkdown() {
-    this.markdown.setContent(`Valor da cota \n ${retrieve("shareDailyValue")}`);
+    this.markdown.setContent(
+      `Valor da cota \n ${Model.retrieve(SHARE_DAILY_VALUE_KEY)}`
+    );
   }
 
   createTable() {

@@ -1,9 +1,10 @@
 const open = require("open");
-const { getData } = require("../model");
+const Model = require("../model");
 
 class Service {
   static async send() {
-    const data = getData();
+    const data = Model.getData();
+    
     let today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
     const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!

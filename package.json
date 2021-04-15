@@ -12,6 +12,7 @@
     "@oclif/plugin-help": "^3.2.2",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.21",
+    "cli-ux": "^5.5.1",
     "conf": "^9.0.2",
     "open": "^8.0.5"
   },

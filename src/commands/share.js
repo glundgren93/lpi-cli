@@ -1,13 +1,14 @@
 const { Command, flags } = require("@oclif/command");
-const { set, retrieve, getData } = require("../model");
+const { SHARE_DAILY_VALUE_KEY } = require("../util/constants");
+const Model = require("../model");
 
 class ShareCommand extends Command {
   async run() {
     const { flags } = this.parse(ShareCommand);
 
     if (flags.value) {
-      set("shareDailyValue", flags.value);
-      console.log("Valor da cota: ", retrieve("shareDailyValue"));
+      Model.set(SHARE_DAILY_VALUE_KEY, flags.value);
+      console.log("Valor da cota: ", Model.retrieve(SHARE_DAILY_VALUE_KEY));
     }
   }
   async catch(error) {
