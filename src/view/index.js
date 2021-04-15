@@ -4,18 +4,19 @@ const blessed = require("blessed"),
 
 class Dashboard {
   screen = blessed.screen();
-  //grid = new contrib.grid({ rows: 4, cols: 12, screen: this.screen });
-  // table = this.grid.set(
-  //   0,
-  //   0,
-  //   6,
-  //   4,
-  //   blessed.ListTable,
-  //   this.createListTable("left", 0, true)
-  // );
+
+  grid = new contrib.grid({ rows: 12, cols: 12, screen: this.screen });
+
+  //grid.set(row, col, rowSpan, colSpan, obj, opts)
+  table = this.grid.set(0, 0, 10, 12, blessed.ListTable, this.createTable());
+
+  markdown = this.grid.set(10, 0, 2, 2, blessed.text, {
+    style: { border: { fg: "#6c97f5" } },
+  });
 
   render() {
     this.generateTable();
+    this.generateMarkdown();
 
     this.screen.key(["escape", "q", "C-c"], function (ch, key) {
       return process.exit(0);
@@ -24,44 +25,29 @@ class Dashboard {
   }
 
   generateTable() {
-    var table = contrib.table({
-      keys: true,
-      vi: true,
-      fg: "white",
-      selectedFg: "black",
-      selectedBg: "#f5f26c",
-      interactive: true,
-      label: "Active Processes",
-      width: "30%",
-      height: "30%",
-      border: { type: "line", fg: "cyan" },
-      columnSpacing: 10,
-      columnWidth: [16, 12, 10, 10],
-    });
-
-    table.focus();
+    this.table.focus();
     //allow control the table with the keyboard
+    var data = [["Nome", "Telefone", "Cotas", "Valor Total"]];
 
-    this.screen.append(table);
-    table.setData({
-      headers: ["Name", "Phone", "Share", "ShareValue"],
-      data: getData(),
+    getData().forEach((user) => {
+      data.push(user);
     });
+
+    this.table.setData(data);
   }
 
   generateMarkdown() {
-    const markdown = contrib.markdown();
-    markdown.setMarkdown(`Valor da cota \n ${retrieve("shareDailyValue")}`);
+    this.markdown.setContent(`Valor da cota \n ${retrieve("shareDailyValue")}`);
   }
 
-  createListTable(alignment, padding = 0, isInteractive = false) {
+  createTable() {
     return {
       keys: true,
-      align: alignment,
+      align: "left",
       selectedFg: "white",
       selectedBg: "blue",
-      interactive: isInteractive, // Makes the list table scrollable
-      padding: padding,
+      interactive: true, // Makes the list table scrollable
+      padding: 0,
       style: {
         fg: "white",
         border: {
@@ -78,7 +64,7 @@ class Dashboard {
           bold: true,
         },
       },
-      columnSpacing: 1,
+      columnSpacing: 0,
     };
   }
 }

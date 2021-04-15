@@ -16,7 +16,6 @@ function setUser(key, newObj) {
     shareValue: newObj.shareValue || old.shareValue,
   };
   config.set(`user.${key}`, obj);
-  console.log(config.get("user"));
 }
 
 function set(key, value) {
