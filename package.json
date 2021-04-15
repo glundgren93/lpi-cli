@@ -1,0 +1,52 @@
+{
+  "name": "lpi-helper",
+  "version": "0.0.0",
+  "author": "Gabriel Lundgren @glundgren93",
+  "bin": {
+    "lpi-helper": "./bin/run"
+  },
+  "bugs": "https://github.com/glundgren93/lpi-helper/issues",
+  "dependencies": {
+    "@oclif/command": "^1.8.0",
+    "@oclif/config": "^1.17.0",
+    "@oclif/plugin-help": "^3.2.2",
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.8.21",
+    "conf": "^9.0.2",
+    "open": "^8.0.5"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.26.0",
+    "globby": "^10.0.2",
+    "rimraf": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/src"
+  ],
+  "homepage": "https://github.com/glundgren93/lpi-helper",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "lpi-helper",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "glundgren93/lpi-helper",
+  "scripts": {
+    "postpack": "rimraf oclif.manifest.json",
+    "prepack": "oclif-dev manifest && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md"
+  }
+}
