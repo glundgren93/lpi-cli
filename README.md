@@ -12,8 +12,23 @@ lpi
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+* [Usage](#usage)
+* [Commands](#commands)
+<!-- tocstop -->
 # Usage
 <!-- usage -->
+```sh-session
+$ npm install -g lpi-cli
+$ lpi COMMAND
+running command...
+$ lpi (-v|--version|version)
+lpi-cli/0.0.0 win32-x64 node-v12.18.3
+$ lpi --help [COMMAND]
+USAGE
+  $ lpi COMMAND
+...
+```
+<!-- usagestop -->
 ```sh-session
 $ npm install -g lpi
 $ lpi COMMAND
@@ -28,5 +43,7 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+
+<!-- commandsstop -->
 
 <!-- commandsstop -->

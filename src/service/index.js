@@ -13,7 +13,7 @@ class Service {
           user[0]
         }. Fechamento da semana em ${getTodayDate()}. Valor da cota R$ ${Model.retrieve(
           SHARE_DAILY_VALUE_KEY
-        )}. Total disponivel de sua aplicação: R$ ${user[3]}`
+        )}. Total disponível de sua aplicação: R$ ${user[3]}`
       );
     }
     console.log("Resultado semanal enviado");

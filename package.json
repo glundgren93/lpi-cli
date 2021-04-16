@@ -1,5 +1,5 @@
 {
-  "name": "lpi",
+  "name": "lpi-cli",
   "version": "0.0.0",
   "author": "Gabriel Lundgren @glundgren93",
   "bin": {
@@ -12,6 +12,7 @@
     "@oclif/plugin-help": "^3.2.2",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.21",
+    "chalk": "^4.1.0",
     "conf": "^9.0.2",
     "inquirer": "^8.0.0",
     "open": "^8.0.2"

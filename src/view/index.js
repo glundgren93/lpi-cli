@@ -1,5 +1,6 @@
 const blessed = require("blessed");
 const contrib = require("blessed-contrib");
+const chalk = require("chalk");
 const { SHARE_DAILY_VALUE_KEY } = require("../util/constants");
 
 const Model = require("../model");
@@ -40,9 +41,13 @@ class Dashboard {
 
   generateMarkdown() {
     this.markdown.setContent(
-      `Valor da cota: R$ ${Model.retrieve(SHARE_DAILY_VALUE_KEY)}
-      Valor total: R$ ${this.calculateTotalValue()}
-      `
+      chalk.rgb(245, 243, 108).bold("Valor da cota: ") +
+        chalk
+          .rgb(66, 129, 245)
+          .bold("R$" + Model.retrieve(SHARE_DAILY_VALUE_KEY)) +
+        "\n" +
+        chalk.rgb(245, 243, 108).bold("Valor total: ") +
+        chalk.rgb(66, 129, 245).bold("R$" + this.calculateTotalValue())
     );
   }
 
@@ -81,7 +86,7 @@ class Dashboard {
       shares.map(parseFloat).reduce((a, b) => a + b, 0) *
       Model.retrieve(SHARE_DAILY_VALUE_KEY);
 
-    return total;
+    return total.toFixed(2);
   }
 }
 
