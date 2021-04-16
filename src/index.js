@@ -9,48 +9,62 @@ const { SHARE_DAILY_VALUE_KEY } = require("./util/constants");
 const {
   userPrompt,
   saveUserPrompt,
-  deleteUsersPrompt,
+  deleteDataPrompt,
+  deleteUserPrompt,
+  deleteSpecificUserPrompt,
   sharePrompt,
 } = require("./prompts");
 
 class LpiCommand extends Command {
   async lpiPrompt() {
     let responses = await inquirer.prompt(userPrompt);
-    let user, toDelete, share;
+    let deletedUser, user, toDelete, share;
 
     switch (responses.user) {
       case "Atualizar cota":
         share = await inquirer.prompt(sharePrompt);
 
         if (share && share.value) {
-          Model.set(SHARE_DAILY_VALUE_KEY, share.value);
+          Model.set(SHARE_DAILY_VALUE_KEY, share.value); // atualiza valor da cota
           console.log("Valor da cota: ", share.value);
         }
-        this.lpiPrompt();
+        this.lpiPrompt(); // reinicia prompt
         break;
-      case "Cadastrar cliente":
+      case "Cadastrar/Atualizar cliente":
         user = await inquirer.prompt(saveUserPrompt);
 
         if (user) {
-          Model.setUser(user.name, user);
+          Model.setUser(user.name, user); // salva usuario
         }
-        this.lpiPrompt();
+        this.lpiPrompt(); // reinicia prompt
         break;
       case "Visualizar clientes":
         let dashboard = new Dashboard();
         dashboard.render();
         break;
       case "Resultado semanal":
-        Service.send();
-        this.lpiPrompt();
+        Service.send(); // envia mensagem whatsapp
+
+        this.lpiPrompt(); // reinicia prompt
         break;
-      case "Deletar clientes":
-        toDelete = await inquirer.prompt(deleteUsersPrompt);
+      case "Deletar cliente":
+        deletedUser = await inquirer.prompt(deleteSpecificUserPrompt);
+        toDelete = await inquirer.prompt(deleteUserPrompt);
+
+        if (toDelete.toBeDeleted) {
+          Model.delete(`user.${deletedUser.user}`); // user.userKey
+        }
+
+        this.lpiPrompt(); // reinicia prompt
+        break;
+      case "Deletar todos dados":
+        toDelete = await inquirer.prompt(deleteDataPrompt);
 
         if (toDelete.toBeDeleted) {
           Model.clearData();
         }
-        this.lpiPrompt();
+
+        this.lpiPrompt(); // reinicia prompt
         break;
 
       default:

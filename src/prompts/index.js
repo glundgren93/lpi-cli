@@ -1,8 +1,24 @@
-const deleteUsersPrompt = {
+const Model = require("../model");
+
+const deleteDataPrompt = {
   type: "confirm",
   name: "toBeDeleted",
   message: "Deseja deletar todos clientes?",
   default: false,
+};
+
+const deleteUserPrompt = {
+  type: "confirm",
+  name: "toBeDeleted",
+  message: "Deseja deletar esse cliente?",
+  default: false,
+};
+
+const deleteSpecificUserPrompt = {
+  type: "list",
+  name: "user",
+  message: "O que você quer fazer?",
+  choices: Model.getUsersByProperty("name"),
 };
 
 const userPrompt = {
@@ -11,10 +27,11 @@ const userPrompt = {
   message: "O que você quer fazer?",
   choices: [
     "Atualizar cota",
-    "Cadastrar cliente",
+    "Cadastrar/Atualizar cliente",
     "Visualizar clientes",
     "Resultado semanal",
-    "Deletar clientes",
+    "Deletar cliente",
+    "Deletar todos dados",
   ],
 };
 
@@ -45,6 +62,8 @@ const saveUserPrompt = [
 module.exports = {
   userPrompt,
   saveUserPrompt,
-  deleteUsersPrompt,
+  deleteSpecificUserPrompt,
+  deleteDataPrompt,
+  deleteUserPrompt,
   sharePrompt,
 };

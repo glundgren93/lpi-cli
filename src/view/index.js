@@ -40,7 +40,9 @@ class Dashboard {
 
   generateMarkdown() {
     this.markdown.setContent(
-      `Valor da cota \n ${Model.retrieve(SHARE_DAILY_VALUE_KEY)}`
+      `Valor da cota: R$ ${Model.retrieve(SHARE_DAILY_VALUE_KEY)}
+      Valor total: R$ ${this.calculateTotalValue()}
+      `
     );
   }
 
@@ -70,6 +72,16 @@ class Dashboard {
       },
       columnSpacing: 0,
     };
+  }
+
+  calculateTotalValue() {
+    const shares = Model.getUsersByProperty("share");
+
+    let total =
+      shares.map(parseFloat).reduce((a, b) => a + b, 0) *
+      Model.retrieve(SHARE_DAILY_VALUE_KEY);
+
+    return total;
   }
 }
 

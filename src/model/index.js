@@ -4,11 +4,13 @@ const { SHARE_DAILY_VALUE_KEY } = require("../util/constants");
 const config = new Conf();
 
 class Model {
+  // limpa todos dados da base
   static clearData() {
     config.clear();
     console.log("Todos dados foram apagados.");
   }
 
+  // busca dados do usuário em lista
   static getData() {
     const data = [];
 
@@ -22,6 +24,7 @@ class Model {
     return data;
   }
 
+  // atualiza usuários com valor da cota atual
   static updateUsers() {
     for (const user in config.store.user) {
       const obj = {
@@ -37,21 +40,26 @@ class Model {
     }
   }
 
+  // retorna um valor por chave
   static retrieve(key) {
     return config.get(key);
   }
 
+  // salva usuario
   static setUser(key, newObj) {
     const old = config.get(`user.${key}`);
 
+    // cria usuários com novo valor ou valores antigos
+    const name = newObj.name || old.name;
+    const phone = newObj.phone || old.phone;
     const share = newObj.share || old.share;
     const totalValue = (share * this.retrieve(SHARE_DAILY_VALUE_KEY)).toFixed(
       2
     );
 
     const obj = {
-      name: newObj.name || old.name,
-      phone: newObj.phone || old.phone,
+      name,
+      phone,
       share,
       totalValue,
     };
@@ -62,9 +70,25 @@ class Model {
     );
   }
 
+  // seta valor na base
   static set(key, value) {
     config.set(key, value);
     if (key === SHARE_DAILY_VALUE_KEY) this.updateUsers();
+  }
+
+  // retorna lista de nome de usuarios
+  static getUsersByProperty(property) {
+    const data = [];
+    for (const key in config.store.user) {
+      data.push(config.store.user[key][property]);
+    }
+    return data;
+  }
+
+  static delete(key) {
+    const user = config.get(key);
+    config.delete(key);
+    console.log(`${user.name} foi deletado com sucesso`);
   }
 }
 
