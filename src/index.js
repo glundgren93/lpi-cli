@@ -2,10 +2,9 @@ const { Command, flags } = require("@oclif/command");
 const inquirer = require("inquirer");
 
 const Model = require("./model");
-const Dashboard = require("./view");
+const Dashboard = require("./view/dashboard");
 const Service = require("./service");
 
-const { SHARE_DAILY_VALUE_KEY } = require("./util/constants");
 const {
   userPrompt,
   saveUserPrompt,
@@ -14,6 +13,7 @@ const {
   deleteSpecificUserPrompt,
   sharePrompt,
 } = require("./prompts");
+const Share = require("./view/share");
 
 class LpiCommand extends Command {
   async lpiPrompt() {
@@ -25,7 +25,7 @@ class LpiCommand extends Command {
         share = await inquirer.prompt(sharePrompt);
 
         if (share && share.value) {
-          Model.set(SHARE_DAILY_VALUE_KEY, share.value); // atualiza valor da cota
+          Model.setShare(share.value); // atualiza valor da cota
           console.log("Valor da cota: ", share.value);
         }
         this.lpiPrompt(); // reinicia prompt
@@ -41,6 +41,10 @@ class LpiCommand extends Command {
       case "Visualizar clientes":
         let dashboard = new Dashboard();
         dashboard.render();
+        break;
+      case "Visualizar cotas":
+        let shares = new Share();
+        shares.render();
         break;
       case "Resultado semanal":
         Service.send(); // envia mensagem whatsapp

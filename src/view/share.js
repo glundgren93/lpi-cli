@@ -1,25 +1,20 @@
 const blessed = require("blessed");
 const contrib = require("blessed-contrib");
 const chalk = require("chalk");
-const { SHARE_DAILY_VALUE_KEY } = require("../util/constants");
 
 const Model = require("../model");
+const { SHARE_DAILY_VALUE_KEY } = require("../util/constants");
 
-class Dashboard {
+class Share {
   screen = blessed.screen();
 
   grid = new contrib.grid({ rows: 12, cols: 12, screen: this.screen });
 
   //grid.set(row, col, rowSpan, colSpan, obj, opts)
-  table = this.grid.set(0, 0, 10, 12, blessed.ListTable, this.createTable());
-
-  markdown = this.grid.set(10, 0, 2, 2, blessed.text, {
-    style: { border: { fg: "#6c97f5" } },
-  });
+  table = this.grid.set(0, 0, 12, 12, blessed.ListTable, this.createTable());
 
   render() {
     this.generateTable();
-    this.generateMarkdown();
 
     this.screen.key(["escape", "q", "C-c"], function (ch, key) {
       return process.exit(0);
@@ -30,25 +25,18 @@ class Dashboard {
   generateTable() {
     this.table.focus();
     //allow control the table with the keyboard
-    var data = [["Nome", "Telefone", "Cotas", "Valor Total"]];
+    let data = [["Valor", "Data"]];
 
-    Model.getData().forEach((user) => {
-      data.push(user);
-    });
-
+    let shares = Model.retrieve(SHARE_DAILY_VALUE_KEY);
+    if (shares && shares.length > 0) {
+      shares.forEach((element) => {
+        let row = [];
+        row.push(element.value);
+        row.push(element.formattedDate);
+        data.push(row);
+      });
+    }
     this.table.setData(data);
-  }
-
-  generateMarkdown() {
-    this.markdown.setContent(
-      chalk.rgb(245, 243, 108).bold("Valor da cota: ") +
-        chalk
-          .rgb(66, 129, 245)
-          .bold("R$" + Model.retrieve(SHARE_DAILY_VALUE_KEY)) +
-        "\n" +
-        chalk.rgb(245, 243, 108).bold("Valor total: ") +
-        chalk.rgb(66, 129, 245).bold("R$" + this.calculateTotalValue())
-    );
   }
 
   createTable() {
@@ -78,16 +66,6 @@ class Dashboard {
       columnSpacing: 0,
     };
   }
-
-  calculateTotalValue() {
-    const shares = Model.getUsersByProperty("share");
-
-    let total =
-      shares.map(parseFloat).reduce((a, b) => a + b, 0) *
-      Model.retrieve(SHARE_DAILY_VALUE_KEY);
-
-    return total.toFixed(2);
-  }
 }
 
-module.exports = Dashboard;
+module.exports = Share;

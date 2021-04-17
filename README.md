@@ -22,7 +22,7 @@ $ npm install -g lpi-cli
 $ lpi COMMAND
 running command...
 $ lpi (-v|--version|version)
-lpi-cli/0.0.0 win32-x64 node-v12.18.3
+lpi-cli/0.1.0 win32-x64 node-v12.18.3
 $ lpi --help [COMMAND]
 USAGE
   $ lpi COMMAND

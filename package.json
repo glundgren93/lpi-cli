@@ -1,6 +1,6 @@
 {
   "name": "lpi-cli",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Gabriel Lundgren @glundgren93",
   "bin": {
     "lpi": "./bin/run"

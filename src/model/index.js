@@ -1,5 +1,6 @@
 const Conf = require("conf");
 const { SHARE_DAILY_VALUE_KEY } = require("../util/constants");
+const { getTodayDate, getTodayPeriod } = require("../util/helper");
 
 const config = new Conf();
 
@@ -32,7 +33,7 @@ class Model {
         phone: config.store.user[user].phone,
         share: config.store.user[user].share,
         totalValue: (
-          config.store.user[user].share * this.retrieve(SHARE_DAILY_VALUE_KEY)
+          config.store.user[user].share * this.retrieveCurrentShareValue()
         ).toFixed(2),
       };
 
@@ -45,6 +46,11 @@ class Model {
     return config.get(key);
   }
 
+  static retrieveCurrentShareValue() {
+    const shares = this.retrieve(SHARE_DAILY_VALUE_KEY);
+    if (shares && shares.length > 0) return shares[shares.length - 1].value;
+  }
+
   // salva usuario
   static setUser(key, newObj) {
     const old = config.get(`user.${key}`);
@@ -53,9 +59,7 @@ class Model {
     const name = newObj.name || old.name;
     const phone = newObj.phone || old.phone;
     const share = newObj.share || old.share;
-    const totalValue = (share * this.retrieve(SHARE_DAILY_VALUE_KEY)).toFixed(
-      2
-    );
+    const totalValue = (share * this.retrieveCurrentShareValue()).toFixed(2);
 
     const obj = {
       name,
@@ -73,7 +77,20 @@ class Model {
   // seta valor na base
   static set(key, value) {
     config.set(key, value);
-    if (key === SHARE_DAILY_VALUE_KEY) this.updateUsers();
+  }
+
+  // seta valor de cota na base
+  static setShare(value) {
+    let shares = config.get(SHARE_DAILY_VALUE_KEY) || [];
+
+    shares.push({
+      value,
+      formattedDate: getTodayDate(),
+      period: getTodayPeriod(),
+    });
+
+    this.set(SHARE_DAILY_VALUE_KEY, shares);
+    this.updateUsers();
   }
 
   // retorna lista de nome de usuarios

@@ -1,3 +1,6 @@
+/**
+ * Returns today's formatted data
+ */
 function getTodayDate() {
   let today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -8,4 +11,17 @@ function getTodayDate() {
   return today;
 }
 
+/**
+ * Returns today's period (mm/yyy)
+ */
+function getTodayPeriod() {
+  let today = new Date();
+  const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  const yyyy = today.getFullYear();
+
+  const period = mm + "/" + yyyy;
+  return period;
+}
+
 module.exports.getTodayDate = getTodayDate;
+module.exports.getTodayPeriod = getTodayPeriod;

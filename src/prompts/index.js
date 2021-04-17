@@ -29,6 +29,7 @@ const userPrompt = {
     "Atualizar cota",
     "Cadastrar/Atualizar cliente",
     "Visualizar clientes",
+    "Visualizar cotas",
     "Resultado semanal",
     "Deletar cliente",
     "Deletar todos dados",
