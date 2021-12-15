@@ -12,9 +12,6 @@ lpi
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
 # Usage
 <!-- usage -->
 ```sh-session
@@ -28,22 +25,14 @@ USAGE
   $ lpi COMMAND
 ...
 ```
-<!-- usagestop -->
-```sh-session
-$ npm install -g lpi
-$ lpi COMMAND
-running command...
-$ lpi (-v|--version|version)
-lpi/0.0.0 win32-x64 node-v12.18.3
-$ lpi --help [COMMAND]
-USAGE
-  $ lpi COMMAND
-...
-```
-<!-- usagestop -->
 # Commands
 <!-- commands -->
 
 <!-- commandsstop -->
 
-<!-- commandsstop -->
+# File location
+Example locations (with the default nodejs suffix):
+
+- macOS: ~/Library/Preferences/MyApp-nodejs
+- Windows: %APPDATA%\MyApp-nodejs\Config (for example, C:\Users\USERNAME\AppData\Roaming\MyApp-nodejs\Config)
+- Linux: ~/.config/MyApp-nodejs (or $XDG_CONFIG_HOME/MyApp-nodejs)
