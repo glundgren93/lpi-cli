@@ -11,9 +11,25 @@ lpi
 <!-- toc -->
 * [Usage](#usage)
 * [Commands](#commands)
+* [File location](#file-location)
+<!-- tocstop -->
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 # Usage
 <!-- usage -->
+```sh-session
+$ npm install -g lpi-cli
+$ lpi COMMAND
+running command...
+$ lpi (-v|--version|version)
+lpi-cli/0.2.0 win32-ia32 node-v14.17.0
+$ lpi --help [COMMAND]
+USAGE
+  $ lpi COMMAND
+...
+```
+<!-- usagestop -->
 ```sh-session
 $ npm install -g lpi-cli
 $ lpi COMMAND
@@ -27,6 +43,8 @@ USAGE
 ```
 # Commands
 <!-- commands -->
+
+<!-- commandsstop -->
 
 <!-- commandsstop -->
 
