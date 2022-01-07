@@ -15,7 +15,7 @@
     "chalk": "^4.1.0",
     "conf": "^9.0.2",
     "inquirer": "^8.0.0",
-    "open": "^8.0.2"
+    "open": "7.1.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",

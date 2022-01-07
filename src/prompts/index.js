@@ -31,6 +31,7 @@ const userPrompt = {
     "Visualizar clientes",
     "Visualizar cotas",
     "Resultado semanal",
+    "Taxa de administração",
     "Deletar cliente",
     "Deletar todos dados",
   ],

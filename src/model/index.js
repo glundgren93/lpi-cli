@@ -12,6 +12,12 @@ class Model {
   }
 
   // busca dados do usuário em lista
+  // const obj = {
+  //   name,
+  //   phone,
+  //   share,
+  //   totalValue,
+  // };
   static getData() {
     const data = [];
 

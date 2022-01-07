@@ -47,7 +47,12 @@ class LpiCommand extends Command {
         shares.render();
         break;
       case "Resultado semanal":
-        Service.send(); // envia mensagem whatsapp
+        await Service.send(); // envia mensagem whatsapp
+
+        this.lpiPrompt(); // reinicia prompt
+        break;
+      case "Taxa de administração":
+        await Service.sendAdministrationFee(); // envia mensagem whatsapp
 
         this.lpiPrompt(); // reinicia prompt
         break;
@@ -80,6 +85,8 @@ class LpiCommand extends Command {
     this.lpiPrompt();
   }
 }
+
+
 
 LpiCommand.description = `Describe the command here
 ...
